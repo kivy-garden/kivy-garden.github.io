@@ -44,7 +44,34 @@
 		<p>This is an organization for developers/users of Kivy widgets, add-ons and related software.
 		<a href="https://github.com/kivy-garden/kivy-garden.github.io/issues/new?title=Please%20add%20me%20to%20the%20garden&amp;body=Thank%20you">Join us</a></p>
 
-		<h2>General Guidelines</h2>
+		<h2>General Usage Guidelines</h2>
+		
+		<ol>
+			<li>
+			<p>Make sure you have `requests` installed::
+			
+			<pre>sudo pip install requests</pre>
+			
+			</p></li>
+			<li><p>Run the Garden tool present in <strong>kivy_install_dir/kivy/tools/</strong>::
+				<pre>$ ./garden list</pre>
+				To list all the installed garden packages
+				<pre>$ ./garden search</pre>
+				To search garden packages on github
+				<pre>$ ./garden install package_name</pre>
+				To install a garden package
+				<pre>$ ./garden uninstall package_name</pre>
+				To uninstall a garden package
+			</p></li>
+			<li>
+			<p>To use a installed garden package::
+			
+			<pre>from kivy.garden import package_name</pre>
+			
+			</p></li>
+		</ol>
+		
+		<h2>General Development Guidelines</h2>
 
 		<ol>
 			<li>Keep the Widget and add-on simple. <strong>Do one task and do it well</strong>.</li>
