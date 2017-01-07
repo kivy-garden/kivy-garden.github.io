@@ -5,6 +5,8 @@ body {
 	line-height: 1.6em;
 	padding: 0px;
 	margin: 0px;
+    background-image: url("flower.png");
+    background-repeat: repeat;
 }
 
 h1, h2, h3, h4, h5 {
@@ -13,7 +15,7 @@ h1, h2, h3, h4, h5 {
 }
 
 a, a:link, a:visited {
-	color: #2a7cdf;
+	color: #595959;
 	text-decoration: none;
 }
 
@@ -38,7 +40,7 @@ a:hover {
 #topbar {
 	background-color: #202326;
 	margin: 0px;
-	padding: 15px 15px 10px 15px;
+	padding: 15px 16px 10px 15px;
 	height: 60px;
 }
 
@@ -110,6 +112,11 @@ a:hover {
 	color: #ffffff;
 }
 
+#topmenu ul.navigation .nav-wiki {
+    background-color: #30757E;
+    color: #ffffff;
+}
+
 #topmenu ul.navigation a.nav-garden:hover {
 	background-color: #99cc00;
 }
@@ -124,6 +131,10 @@ a:hover {
 
 #topmenu ul.navigation a.nav-pdf:hover {
 	background-color: #ffbb33;
+}
+
+#topmenu ul.navigation .nav-wiki:hover {
+    background-color: #50C8D7;
 }
 
 
