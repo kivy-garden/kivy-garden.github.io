@@ -37,11 +37,13 @@
         <div class="sphinxsidebar" style="padding-left: 20px;">
             <h3 class="sphinxsidebar">Kivy Garden</h3>
             <ul class="sphinxsidebar">
-                <li><a href="index.html#usageguidelines">General Usage Guidelines</a></li>
-                <li><a href="index.html#devguidelines">Development Guidelines</a></li>
-                <li><a href="index.html#issues">Other issues</a></li>
-                <li><a href="index.html#spam">Disabling notification spam</a></li>
-                <li><a href="index.html#transfer">Transferring repository</a></li>
+                <li><a href="index.html#generalusageguidelines">General Usage Guidelines</a></li>
+                <li><a href="index.html#developmentguidelines">Development Guidelines</a></li>
+                <li><a href="index.html#makingareleaseforyourflower">Making a release for your flower</a></li>
+                <li><a href="index.html#disablingnotificationspam">Disabling notification spam</a></li>
+                <li><a href="index.html#transferringrepository">Transferring repository</a></li>
+                <li><a href="index.html#legacygardentoolgeneralusageguidelines">Legacy Garden Tool General Usage Guidelines</a></li>
+                <li><a href="index.html#guideformigratingflowersfromlegacystructure">Guide for migrating flowers from legacy structure</a></li>
                 <li><a href="gallery.html">Gallery</a></li>
             </ul>
         </div>
@@ -83,167 +85,356 @@
             </table>
         </div>
         <div id="content">
-            <h1 style="padding-top: 10px">Welcome to Kivy Garden</h1>
+            <h1 id="welcometokivygarden">Welcome to Kivy Garden</h1>
 
-            <div class="admonition note">
-                <p class="first admonition-title">Note</p>
-                <p class="last">This Page is under construction.</p>
-            </div>
+            <p>This is an organization for developers of Kivy widgets, add-ons and related software.</p>
 
-            <p>This is an organization for developers of Kivy widgets, add-ons
-            and related software.</p>
-            <p>Join us by opening a <a href="https://github.com/kivy-garden/kivy-garden.github.io/issues/new?title=Please%20add%20me%20to%20Kivy%20Garden&body=Link%20for%20a%20merged%20garden%20PR%20or%20a%20proposed%20new%20flower%3A%0A%3Cgarden%20PR%20or%20transferable%20repository%20link%3E">new issue</a>.</p>
-            <p>Memberships are granted for users who have contributed to existing
-            garden flowers in the past year or have submitted their own flower
-            in the application. Please note that memberships expire after
-            a year of inactivity.</p>
+            <p>If you have a kivy flower you'd like to contribute to garden see <a href="#developinganewflower">Developing a new flower</a>.</p>
 
-            <h2 id="usageguidelines">General Usage Guidelines</h2>
+            <p>Memberships are granted for users who have contributed to existing garden flowers in the past year or have submitted their own flower in the application. Please note that memberships expire after a year of inactivity.</p>
 
-            <ol>
-                <li>
-                    <p>Make sure you have <code>requests</code> installed:
+            <p class="text-danger">
+            The garden flower widgets are contributed by regular users such as yourself. The kivy developers do not take any responsibility for the code hosted in the garden organization repositories - we do not actively monitor the flower repos. Please use at your own risk.
+            </p>
 
-                        <pre>sudo pip install requests</pre>
+            <h2 id="updatetogardenstructure">Update to garden structure</h2>
 
-                    </p>
-                </li>
-                <li>
-                    <p>Install <code>kivy-garden</code> if you don't have it:
-                        <pre>pip install kivy-garden</pre>
-                        Make sure you have the folder that contains
-                        <code>garden</code> file on your <code>PATH</code>
-                        (or <code>cd</code> to the folder).
-                        <pre>$ garden list</pre>
-                        To list all the installed garden packages
-                        <pre>$ garden search</pre>
-                        To search garden packages on GitHub
-                        <pre>$ garden install package_name</pre>
-                        To install a garden package
-                        <pre>$ garden uninstall package_name</pre>
-                        To uninstall a garden package
-                    </p>
-                </li>
-                <li>
-                    <p>To use a installed garden package:
+            <p>Starting with the kivy 1.11.0 release, kivy has <a href="https://github.com/kivy/kivy/wiki/Moving-kivy.garden.xxx-to-kivy_garden.xxx-and-kivy.deps.xxx-to-kivy_deps.xxx">shifted</a> from using the garden legacy tool that installs flowers with <code>garden install flower</code> and where the flower does not have a proper python package structure to flowers that can be installed with pip and uploaded to pypi. Kivy supports the legacy garden flowers side by side with the newer packages so the garden tool and legacy flowers will be able to be used indefinitely. But we will only provide support for the newer packages format in the future.</p>
 
-                        <pre>from kivy.garden import package_name</pre>
+            <p>For garden package maintainers - for a guide how to migrate your garden package from the legacy structure <code>garden.flower</code> to the newer <code>flower</code> structure used with the pip, see <a href="#guideformigratingflowersfromlegacystructure">this guide</a>.</p>
 
-                    </p>
-                </li>
-                <li>
-                    <p>By default the installation is done in
-                    <code>~/.kivy/garden/garden.widgetname</code> so that all
-                    kivy apps can use the widget once installed.</p>
-                    <p>To include the package in your mobile distribution, you
-                    should install the garden package with <code>--app</code>
-                    command line argument, this way the package is downloaded
-                    and installed in your app directory and thus included in
-                    your apk.</p>
-                    <p><pre>cd my_app_dir
-/path/to/kivy_instalation/kivy/tools/garden install --app graph</pre>
-                    </p>
-                    </p>This should install the Graph Widget in
-                    <code>my_app_dir/libs/garden/garden.widgetname</code>
-                    </p>
-                </li>
-            </ol>
+            <h2 id="generalusageguidelines">General Usage Guidelines</h2>
 
-            <h2 id="devguidelines">Development Guidelines</h2>
+            <p>To use a kivy garden flower, first check if the flower is in the legacy format. If the flower name is in the format of <code>garden.flower</code>, such as <a href="https://github.com/kivy-garden/garden.graph">garden.graph</a> it is a legacy flower. If it is just <code>flower</code> such as <a href="https://github.com/kivy-garden/graph">graph</a> it is in the present format. If it is in the legacy format see <a href="#legacygardentoolgeneralusageguidelines">Legacy Garden Tool General Usage Guidelines</a> for how to install and use it. Otherwise, continue with the guide below.</p>
+
+            <p>Garden flowers can be installed with the <code>pip</code> tool like a normal python package. Given a flower that you want to install, lets use <a href="https://github.com/kivy-garden/graph">graph</a> as an example. You can install it directly from github master with:</p>
+
+            <pre><code class="sh language-sh">python -m pip install https://github.com/kivy-garden/graph/archive/master.zip
+            </code></pre>
+
+            <p>Look under the repository's releases tab if you'd like to install a specific release or a pre-compiled wheel, if the flower has any. Then use the url with <code>pip</code>.</p>
+
+            <p>Or you can automatically install it using garden's pypi server with:</p>
+
+            <pre><code class="sh language-sh">python -m pip install kivy_garden.graph --extra-index-url https://kivy-garden.github.io/simple/
+            </code></pre>
+
+            <p>To permanently add our garden server to your pip configuration so that you don't have to specify it with <code>--extra-index-url</code>, add</p>
+
+            <pre><code class="yaml language-yaml">[global]
+            timeout = 60
+            index-url = https://kivy-garden.github.io/simple/
+            </code></pre>
+
+            <p>to your <a href="https://pip.pypa.io/en/stable/user_guide/#config-file">pip.conf</a>.</p>
+
+            <p>If the flower maintainer has uploaded the flower to <a href="https://pypi.org/">pypi</a>, you can just install it with <code>pip install kivy_garden.flower</code>.</p>
+
+            <h1 id="developmentguidelines">Development Guidelines</h1>
+
+            <h2 id="developinganewflower">Developing a new flower</h2>
+
+            <p>If your flower will be a pure python flower start with the pure python <a href="https://github.com/kivy-garden/flower">demo</a>. If it is a cython flower, start with this <a href="https://github.com/kivy-garden/cython_flower">demo</a>.</p>
 
             <ol>
-                <li>Code added to the garden <strong>must be licensed under MIT</strong>
-                (same as Kivy) and a LICENSE file must be added to every
-                repository.
-                </li>
-                <li>Keep the Widget and add-on simple. <strong>Do one task and
-                do it well</strong>.</li>
-                <li>
-                    <p>Your repository will be named "garden.widgetname". This
-                    will allow us to import your widget by using the following
-                    import statement:</p>
+            <li><p>Create a new empty repository in your github account named <code>widgetname</code> (the lowercase name of the widget you're contributing).</p></li>
 
-                    <pre>from kivy.garden.widgetname import WidgetName</pre>
-                </li>
-                <li>
-                    <p>Name your widget correctly. Don't put "Widget" in the
-                    widget name as this is obvious. (SliderWidget,
-                    ProgressBarWidget are wrong, keep it simple.)</p>
-                </li>
-                <li>
-                    <p>Create adequate documentation that explains the
-                    functionality of your widget.</p>
-                </li>
-                <li>
-                    <p>Follow the <a href="http://www.python.org/dev/peps/pep-0008/">
-                    PEP8 guidelines</a> for coding standards.</p>
-                </li>
-                <li>
-                    <p>Follow the kivy <a href="http://kivy.org/docs/contribute.html">
-                    guidelines for contributing</a>. To install the pep8
-                    checker into your git directory do</p>
+            <li><p>Clone the demo repo locally (the following instructions use git ssh urls, replace <code>git@github.com:your_github_username</code> with <code>https://github.com/your_github_username</code> if you don't have <code>ssh</code> set up):</p>
 
-                    <pre>cp path-to-kivy/kivy/tools/pep8checker/pre-commit.githook path-to-your-source/.git/hooks/pre-commit <br>chmod +x path-to-garden-source/.git/hooks/pre-commit</pre>
+            <pre><code class="sh language-sh">git clone git@github.com:kivy-garden/flower.git widgetname
+            </code></pre>
 
-                    <p>Then assuming you have kivy in your path, our style
-                    guide check will run whenever you do a commit, and if there
-                    are violations in the parts that you changed, your commit
-                    will be aborted. Fix &amp; retry.</p>
-                </li>
-                <li>
-                    <p>Use the <a href="http://kivy.org/docs/api-kivy.modules.monitor.html">
-                    <code>Monitor</code> module</a> to ensure that your widget
-                    can maintain a FPS rate above 60, ensuring smooth
-                    interaction with the user.</p>
-                </li>
-                <li>
-                    <p>Follow the <a href="http://wiki.python.org/moin/PythonSpeed/PerformanceTips">
-                    performance guidelines for Python</a>, like ensuring
-                    minimum lookups, avoiding lookups in loops...</p>
-                </li>
-                <li>
-                    <p>As a way of self-organizing widgets, add a screenshot
-                    named "<code>screenshot.png</code>" to the root of your repo
-                    showcasing the widget.</p>
-                </li>
-                <li>
-                    <p>Use tags instead of a directory structure to categorize
-                    your widgets in the documentation.</p>
-                </li>
+            <p>or if will be a cython flower:</p>
+
+            <pre><code class="sh language-sh">git clone git@github.com:kivy-garden/cython_flower.git widgetname
+            </code></pre>
+
+            <p>You'll be modifying the demo flower to contain your own widget.</p></li>
+
+            <li><p>Now mirror the demo to your account and fix the git origin to point to your account:
+            <code>sh
+            cd widgetname
+            git push --mirror git@github.com:your_github_username/widgetname.git
+            git remote set-url origin git@github.com:your_github_username/widgetname.git
+            </code></p></li>
+
+            <li><p>Start customizing the demo repo for your flower:</p>
+
+            <p><ol>
+            <li>Rename the <code>kivy_garden/flower</code> directory to <code>kivy_garden/widgetname</code>.</li></p>
+
+            <p><li>Replace the contents of <code>kivy_garden/widgetname/__init__.py</code> with code for your widget. People will be importing your new widget with <code>from kivy_garden.widgetname import WidgetName</code> so make sure that works.</li></p>
+
+            <p><li>Fix the tests in <code>tests/</code> to test your widget. The test are run with pytest. Try to test as much as you can.</li></p>
+
+            <p><li>Fix the <code>README.md</code> with basic information about your widget.</li></p>
+
+            <p><li>Fix <code>setup.py</code> to replace all references of <code>flower</code> with <code>widgetname</code> and everything else as appropriate.</li></p>
+
+            <p><li>Test install it to python and use it in your app to see if it works:
+            <code>sh
+            pip install -e .
+            </code>
+            This installs it in place so you can test and change the source code directly without having to reinstall every time. To test:
+            <code>sh
+            python -c "from kivy_garden.widgetname import WidgetName"
+            </code>
+            If it's a cython flower, compile it after any changes:
+            <code>sh
+            python setup.py build_ext --inplace
+            </code>
+            To run the tests:
+            <code>sh
+            python -m pytest tests/
+            </code></li></p>
+
+            <p><li>If you enable travis integration for your new <code>widgetname</code> repo on github, the code will be automatically tested on travis after every commit (see the <code>.travis.yml</code> file - you shouldn't need to change anything there). Kivy-garden will automatically run travis integration on all flowers, so make sure it works.</li></p>
+
+            <p><li>Finally, add your changes, commit and push all your changes to github:
+            <code>sh
+            git push origin master
+            </code></li></p>
+
+            <p><li>Make sure that travis runs without failures, otherwise fix and push etc.</li></ol>
+
+            <p></p></li></p>
+
+            <p><li><p>Now that the <code>widgetname</code> repo is ready, you're ready to transfer it into kivy-garden. See <a href="#transferringrepository">Transferring repository</a>.</p></li></p>
+
+            <p><li><p>To make the project installable with <code>pip</code>, you'll need to add it to garden's simple pypi server.</p></p>
+
+            <p><ol>
+            <li>Fork the <a href="https://github.com/kivy-garden/kivy-garden.github.io">garden website</a> into your account.</li></p>
+
+            <p><li>Take a look at how the current flowers are <a href="https://github.com/kivy-garden/kivy-garden.github.io/tree/master/simple">listed</a> and add a similar new file for your flower (<code>kivy-garden-widgetname/index.html</code>).</li></p>
+
+            <p><li>Add your flower to the root <code>simple/index.html</code> file.</li></p>
+
+            <p><li>Make a pull request to the original <a href="https://github.com/kivy-garden/kivy-garden.github.io">repo</a> and link to it in your issue that requests that your flower be added to kivy-garden that you opened in <a href="#transferringrepository">Transferring repository</a>.</li></ol></p>
+
+            <p></li></p>
+
+            <p><li><p>In the future if you want tp make a release to your flower and change the version, see <a href="#Making a release for your flower">Making a release for your flower</a> for how to make a release and add these releases to the pypi server.</p></li>
+            </ol></p>
+
+            <h2 id="flowerguidelines">Flower guidelines</h2>
+
+            <ol>
+            <li><p>Code added to the garden <strong>must be licensed under MIT</strong> (same as Kivy) and a LICENSE file must be added to every repository.</p></li>
+
+            <li><p>Keep the Widget and add-on simple. <strong>Do one task and do it well</strong>.</p></li>
+
+            <li><p>Name your widget correctly. Don't put "Widget" in the widget name as this is obvious. (SliderWidget, ProgressBarWidget are wrong, keep it simple.)</p></li>
+
+            <li><p>Create adequate documentation that explains the functionality of your widget. A doc directory using sphinx documentation is adequate, or just nice docs in the actualy code or readme.</p></li>
+
+            <li><p>Follow the <a href="http://www.python.org/dev/peps/pep-0008/">PEP8 guidelines</a> for coding standards.</p></li>
+
+            <li><p>Follow the kivy <a href="http://kivy.org/docs/contribute.html">guidelines for contributing</a>. To install the pep8 checker into your git directory do</p>
+
+            <pre>cp path-to-kivy/kivy/tools/pep8checker/pre-commit.githook path-to-your-source/.git/hooks/pre-commit
+            chmod +x path-to-garden-source/.git/hooks/pre-commit</pre>
+
+            <p>Then assuming you have kivy in your path, our style guide check will run whenever you do a commit, and if there are violations in the parts that you changed, your commit will be aborted. Fix &amp; retry.</p></li>
+
+            <li><p>Use the <a href="http://kivy.org/docs/api-kivy.modules.monitor.html"><code>Monitor</code> module</a> to ensure that your widget can maintain a FPS rate above 60, ensuring smooth interaction with the user.</p></li>
+
+            <li><p>Follow the <a href="http://wiki.python.org/moin/PythonSpeed/PerformanceTips">performance guidelines for Python</a>, like ensuring minimum lookups, avoiding lookups in loops...</p></li>
+
+            <li><p>As a way of self-organizing widgets, add a screenshot named "<code>screenshot.png</code>" to the root of your repo showcasing the widget.</p></li>
+
+            <li><p>Use tags instead of a directory structure to categorize your widgets in the documentation.</p></li>
             </ol>
-            <p>Note: you must have a GitHub account to open a ticket. You can
-            create one for free <a href="https://github.com/">here</a>.</p>
 
-            <h2 id="issues">Other issues</h2>
+            <p>Note: you must have a GitHub account to open a ticket. You can create one for free <a href="https://github.com/">here</a>.</p>
 
-            <p>For all other issues, please open a ticket in the appropriate
-            <a href="https://github.com/kivy-garden">repository</a>.</p>
+            <h2 id="makingareleaseforyourflower">Making a release for your flower</h2>
 
-            <h2 id="spam">Disabling notification spam</h2>
+            <ol>
+            <li>Update <code>CHANGELOG.md</code> and commit the changes</li>
 
-            <p>By default you are subscribed to all new Garden github
-            repository notifications. Unless you disable this yourself, your
-            inbox will soon contain only Github spam.</p>
+            <li>Update <code>__version__</code> in <code>kivy-garden/flower/__init__.py</code> (or in <code>kivy-garden/flower/_version.py</code> if it's a cython flower) to the next version and commit the change. If it's <code>x.y.z.dev0</code>, remove the <code>dev0</code> to update to the release version.</li>
+
+            <li>Call <code>git tag -a x.y.z -m "Tagging version x.y.z"</code> to make a tag</li>
+
+            <li>Call <code>python setup.py bdist_wheel --universal</code> (or <code>python setup.py bdist_wheel</code> if it's a cython flower) and <code>python setup.py sdist</code>, which generates the wheel and sdist in the dist/* directory.</li>
+
+            <li>Make sure the dist directory contains the files to be uploaded to pypi and call <code>twine check dist/*</code></li>
+
+            <li>Then call <code>twine upload dist/*</code> to upload to pypi.</li>
+
+            <li>Call <code>git push origin master --tags</code> to push the latest changes and the tags to github.</li>
+
+            <li>In github, go to the release tab and draft a new release for the tag. Upload there any wheels you generated (if any).</li>
+
+            <li>Make a new PR that updates <code>https://github.com/kivy-garden/kivy-garden.github.io/blob/master/simple/kivy-garden-widgetname/index.html</code> to list any new wheels, sdist, and versions as needed. Link to the github release files as needed. See the <a href="https://kivy-garden.github.io/simple/">website</a> for information on how to list files on a pypi server.</li>
+
+            <li>Update <code>__version__</code> in <code>kivy-garden/flower/__init__.py</code> (or in <code>kivy-garden/flower/_version.py</code> if it's a cython flower) to the next dev (e.g. <code>x.y+1.z.dev0</code>) version and commit and push the change.</li>
+            </ol>
+
+            <h2 id="otherissues">Other issues</h2>
+
+            <p>For all other issues, please open a ticket in the appropriate <a href="https://github.com/kivy-garden">repository</a>.</p>
+
+            <h2 id="disablingnotificationspam">Disabling notification spam</h2>
+
+            <p>By default you are subscribed to all new Garden github repository notifications. Unless you disable this yourself, your inbox will soon contain only Github spam.</p>
 
             <p>Go to <a href="https://github.com/watching">https://github.com/watching</a>
-                <br/> Select what to watch or uncheck Automatically watch. But
-                attention: latter will disable watch for all organizations.</p>
+            Select what to watch or uncheck Automatically watch. But attention: latter will disable watch for all organizations.</p>
 
-            <h2 id="transfer">Transferring repository</h2>
+            <h2 id="transferringrepository">Transferring repository</h2>
+
+            <p>Once you have a flower repository ready and all the tests are passing, you're ready to transfer it to garden.</p>
 
             <p>How to move your repository to Kivy Garden shared ownership?</p>
 
-            <p>About transferring the ownership of repositories. See Github
-            instructions regarding transfers</p>
+            <p>About transferring the ownership of repositories. See Github instructions regarding transfers</p>
 
-            <p>Personally contact any of the Kivy Garden administrators.
-            Make him/her the owner of the repository which needs to be
-            transferred. If the repository is already part of Github
-            organization then create a new team and make the garden admin
-            person the sole member of this team. Then assign the ownership
-            permission of the repository to the new team. Now the garden
-            administrator can go to the repository settings and press Transfer
-            Ownership button</p>
+            <p>Join us by opening a <a href="https://github.com/kivy-garden/kivy-garden.github.io/issues/new?title=Please%20add%20me%20to%20Kivy%20Garden&amp;body=Link%20for%20a%20merged%20garden%20PR%20or%20a%20proposed%20new%20flower%3A%0A%3Cgarden%20PR%20or%20transferable%20repository%20link%3E">new issue</a> indicating you have a flower to contribute.</p>
+
+            <p>Request the github name of any of the Kivy Garden administrators team on the github issue who is ready to initiate the process. Make sure they are actually an admin. Then, make them the owner of the repository which needs to be transferred. If the repository is already part of Github organization then create a new team and make the garden admin person the sole member of this team. Then assign the ownership permission of the repository to the new team. Now the garden administrator can go to the repository settings and press Transfer Ownership button</p>
+
+            <h1 id="legacyflowers">Legacy Flowers</h1>
+
+            <h2 id="legacygardentoolgeneralusageguidelines">Legacy Garden Tool General Usage Guidelines</h2>
+
+            <ol>
+            <li><p>Make sure you have <code>requests</code> installed:</p>
+
+            <pre>sudo pip install requests</pre></li>
+
+            <li><p>Install <code>kivy-garden</code> if you don't have it:</p>
+
+            <pre>pip install kivy-garden</pre>
+
+            <p>Make sure you have the folder that contains <code>garden</code> file on your <code>PATH</code> (or <code>cd</code> to the folder).</p>
+
+            <pre>$ garden list</pre>
+
+            <p>To list all the installed garden packages</p>
+
+            <pre>$ garden search</pre>
+
+            <p>To search garden packages on GitHub</p>
+
+            <pre>$ garden install package_name</pre>
+
+            <p>To install a garden package</p>
+
+            <pre>$ garden uninstall package_name</pre>
+
+            <p>To uninstall a garden package</p></li>
+
+            <li><p>To use a installed garden package:</p>
+
+            <pre>from kivy.garden import package_name</pre></li>
+
+            <li><p>By default the installation is done in <code>~/.kivy/garden/garden.widgetname</code> so that all kivy apps can use the widget once installed.</p>
+
+            <p>To include the package in your mobile distribution, you should install the garden package with <code>--app</code> command line argument, this way the package is downloaded and installed in your app directory and thus included in your apk.</p>
+
+            <pre>cd my_app_dir
+            /path/to/kivy_instalation/kivy/tools/garden install --app graph</pre>
+
+            <p>This should install the Graph Widget in <code>my_app_dir/libs/garden/garden.widgetname</code></p></li>
+            </ol>
+
+            <h2 id="guideformigratingflowersfromlegacystructure">Guide for migrating flowers from legacy structure</h2>
+
+            <p>This is a guide for how to migrate a flower with legacy <code>garden.flower</code> structure to the new proper python package <code>flower</code> structure.</p>
+
+            <ul>
+            <li>Demo of the result of converting <strong>pure-python</strong> graph from <a href="https://github.com/kivy-garden/garden.graph">legacy</a> to <a href="https://github.com/kivy-garden/graph">updated</a>.</li>
+
+            <li>Demo of the result of converting <strong>cython-python</strong> collider from <a href="https://github.com/kivy-garden/garden.collider">legacy</a> to <a href="https://github.com/kivy-garden/collider">updated</a>.</li>
+            </ul>
+
+            <p>Here are the base <a href="https://github.com/kivy-garden/flower/">pure-python</a> and <a href="https://github.com/kivy-garden/cython_flower">cython-python</a> flowers to be used as starting points for the migration.</p>
+
+            <p>The following steps use the garden graph package to demonstrate how to migrate a package to the new format.</p>
+
+            <ol>
+            <li><p>Ensure that the original flower issues and pull requests are closed or can be closed because the repo will be archived after the following process. Issues can be transferred to the new repo if needed.</p></li>
+
+            <li><p>Create a new empty repo with the name <code>graph</code> in <a href="https://github.com/kivy-garden/">garden</a> or request in a new issue that we create one for you and give you access.</p></li>
+
+            <li><p>In <a href="https://coveralls.io">coveralls</a> sync the <code>kivy-garden</code> repos and then enable it (or request that we enable it).</p></li>
+
+            <li><p>Clone the flower demo repo, if you haven't already. Otherwise make sure it is up to date with master:
+            For a pure python flower:
+            <code>sh
+            git clone git@github.com:kivy-garden/flower.git
+            </code>
+            or for a cython-python flower:
+            <code>sh
+            git clone git@github.com:kivy-garden/cython_flower.git
+            </code></p></li>
+
+            <li><p>Push the flower repo to github:
+            <code>sh
+            cd flower
+            git push --mirror git@github.com:kivy-garden/graph.git
+            </code></p></li>
+
+            <li><p>Now clone <code>graph</code> and the original <code>garden.graph</code> locally:
+            <code>sh
+            git clone git@github.com:kivy-garden/graph.git
+            git clone git@github.com:kivy-garden/garden.graph.git
+            </code></p></li>
+
+            <li><p>Merge <code>garden.graph</code> into the new <code>graph</code>:</p>
+
+            <pre><code class="sh language-sh">cd graph
+            git remote add original ../garden.graph
+            git remote update
+            git merge --allow-unrelated-histories original/master
+            </code></pre>
+
+            <p>If there are any merge conflicts, resolve them and commit.</p></li>
+
+            <li><p>Migrate the original package structure into a pythonic structure.</p>
+
+            <p><ol>
+            <li>Remove the <code>kivy-garden/flower</code> directory and make a new <code>kivy-garden/graph</code> directory.</li></p>
+
+            <p><li>Copy all the original python modules e.g. <code>__init__.py</code> into <code>kivy-garden/graph</code>.</li></p>
+
+            <p><li>Fix the tests in <code>tests/</code> to test the graph code.</li></p>
+
+            <p><li>open <code>setup.py</code> and replace all instances of <code>flower</code> with <code>graph</code>.</li></p>
+
+            <p><li>Do any remaining cleanup, e.g. duplicate license files or readme.</li></p>
+
+            <p><li>Commit all changes.</li></ol>
+
+            <p></p></li></p>
+
+            <p><li><p>Test to make sure everything works, otherwise fix and commit (make sure <code>pytest</code> is installed).
+            Test install it to python and use it in your app:
+            <code>sh
+            pip install .
+            python -c "from kivy_garden.graph import Graph"
+            </code>
+            If it's a cython flower (graph isn't), compile it first:
+            <code>sh
+            PYTHONPATH=.:$PYTHONPATH python setup.py build_ext --inplace
+            </code>
+            Then run the tests:
+            <code>sh
+            PYTHONPATH=. python -m pytest tests/
+            </code></p></li></p>
+
+            <p><li><p>Push to kivy-garden and remove the original garden remote
+            <code>sh
+            git push origin master
+            git remote rm original
+            </code></p></li></p>
+
+            <p><li><p>Verify that the travis tests pass.</p></li></p>
+
+            <p><li><p>Transfer issues from the <code>garden.graph</code> to <code>graph</code> and archive <code>garden.graph</code>.</p></li>
+            </ol></p>
         </div>
     </div>
     <script src="javascripts/scale.fix.js"></script>
